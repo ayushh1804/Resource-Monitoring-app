@@ -4,24 +4,123 @@
     <title>System Monitoring</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #1f77b4;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+      .alert {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        background-color: #ffcccc;
+        color: #cc0000;
+        text-align: center;
+      }
       .plotly-graph-div {
         margin: auto;
-        width: 50%;
-        background-color: rgba(151, 128, 128, 0.688);
+        width: 100%;
+
         padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .info {
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      .info h2 {
+        color: #333;
+        font-size: 20px;
+        margin-top: 0;
+      }
+      .info p {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .tip {
+        background-color: #d9f0a3;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+        display: none; /* Initially hide tips section */
+      }
+      .tip h3 {
+        color: #1f77b4;
+        font-size: 18px;
+        margin-top: 0;
+      }
+      .tip p {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .show-tips-button {
+        background-color: #1f77b4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>System Monitoring</h1>
-      <div id="cpu-gauge"></div>
-      <div id="mem-gauge"></div>
-      {% if message %}
-      <div class="alert alert-danger">{{ message }}</div>
-      {% endif %}
+      <div class="alert" id="alert-message">
+        <p>Alert: System performance degraded! High CPU or Memory Usage Detected, scale up!!!</p>
+      </div>
+      <div class="plotly-graph-div" id="cpu-gauge"></div>
+      <div class="plotly-graph-div" id="mem-gauge"></div>
+      <div class="info">
+        <h2>Additional Information</h2>
+        <p>This dashboard provides real-time monitoring of CPU and memory utilization.</p>
+        <p>Thresholds:</p>
+        <ul>
+          <li>CPU: 0-50% (green), 50-85% (yellow), 85-100% (red)</li>
+          <li>Memory: 0-50% (green), 50-85% (yellow), 85-100% (red)</li>
+        </ul>
+      </div>
+      <button class="show-tips-button" onclick="toggleTips()">Show Tips</button>
+      <div class="tip" id="tips-section">
+        <h3>Tips to Optimize Cloud Server Performance</h3>
+        <p>1. Use auto-scaling to dynamically adjust server capacity based on traffic.</p>
+        <p>2. Utilize caching mechanisms and Content Delivery Networks (CDNs) to improve response times.</p>
+        <p>3. Implement serverless architecture for tasks with sporadic or unpredictable resource usage.</p>
+        <p>4. Monitor and optimize database queries to reduce latency.</p>
+        <p>5. Regularly review and optimize cost-effective instance types and configurations.</p>
+      </div>
     </div>
     <script>
+      function toggleTips() {
+        var tipsSection = document.getElementById("tips-section");
+        if (tipsSection.style.display === "none") {
+          tipsSection.style.display = "block";
+        } else {
+          tipsSection.style.display = "none";
+        }
+      }
+
       var cpuGauge = {
           type: "indicator",
           mode: "gauge+number",
