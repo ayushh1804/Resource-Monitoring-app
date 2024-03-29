@@ -4,7 +4,8 @@
 
 This project serves as a comprehensive guide for building a monitoring application in Python utilizing Flask and the psutil library. It covers key aspects such as local enviornment setup, containerization with Docker, and orchestration via Kubernetes. Additionally, the project provides detailed instructions on integrating with Amazon ECR to store Docker images and managing Kubernetes deployments and services using Aws Elastic Kubernetes Service and Python scripts.
 
-![Screenshot 2024-03-29 134544](https://github.com/ayushh1804/Resource-Monitoring-app/assets/88641651/a8168df5-52b4-4a02-93dd-7a9ebfb27888)
+![image](https://github.com/ayushh1804/Resource-Monitoring-app/assets/88641651/6507606f-3507-481e-b1f0-df333ab58744)
+
 
 ## Table of Contents
 
